@@ -4,8 +4,37 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="/static/style.css">
-    <title>Agenda</title>
+    <link rel="stylesheet" href="/static/bootstrap.min.css">
+    <title>{% block title %}{% endblock %} | Agenda</title>
   </head>
+    <header class="bg-secondary">
+      <nav>
+        {{ request.url }}
+        <ul class="navbar-nav d-flex flex-row justify-content-between">
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a href="#" class="nav-link text-light">
+                Olá,  {{ user.username }}!
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light" href="/logout">Sair</a>
+             </li>
+          {% else %}
+            {% if request.path != '/login' and request.path != '/login/' %}
+              <li class="nav-item">
+                <a class="nav-link text-light" href="/login">Entre</a></li>
+            {% elif request.path != '/signup' and request.path != '/signup/' %}
+            <li class="nav-item">
+              <a class="nav-link text-light" href="/signup">Cadastre-se</a></li>
+            {% endif %}
+          {% endif %}
+        </ul>
+      </nav>
+    </header>
+    <main class="container mt-3">
     {% block content %}{% endblock %}
+    </main>
+    <script src="/static/index.js" type="text/javascript" charset="utf-8"></script>
   </body>
 </html>

@@ -1,1 +1,4 @@
-p, li{font-size:14pt;}
+*{box-sizing: bordex-box;}
+main{font-size:14pt;padding: 5px;}
+ul.d-flex > li{margin-right: 10px;}
+header > nav{padding: 10px;}

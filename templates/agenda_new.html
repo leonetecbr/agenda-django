@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Novo evento{% endblock %}
+{% block content %}
+    <h2>Novo evento</h2>
+    <hr>
+    {% for message in messages %}
+      <b>{{ message }}</b>
+    {% endfor %}
+    <form method="POST" class="row">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="title_evento" class="form-label">Título: </label> <input type="text" id="title_evento" class="form-control" {% if titulo %}value="{{ titulo }}"{% endif %} name="title">
+      </div>
+      <div class="mb-3">
+        <label for="date" class="form-label">Data do evento:</label> <input type="datetime-local" id="date" class="form-control" {% if date %}value="{{ date }}"{% endif %} name="data">
+      </div>
+      <div class="mb-3">
+        <label for="descricao" class="form-label">Descrição:</label><textarea name="desc" id="descricao" rows="5" class="form-control">{% if desc  %}{{ desc }}{% endif %}</textarea>
+      </div>
+      <div class="mb-3">
+        <label for="local" class="form-label">Local:</label> <input type="text" id="local" class="form-control" {% if local %}value="{{ local }}"{% endif %} name="local">
+      </div>
+      <div class="d-grid">
+        <button type="submit" class="btn btn-success btn-lg mb-3">Salvar</button>
+        <button type="button" class="btn btn-danger btn-lg" onclick="redirect('/agenda/')">Cancelar</button>
+      </div>
+    </form>
+{% endblock %}

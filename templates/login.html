@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+    <h2>Login</h2>
+    <hr>
+    {% for message in messages %}
+      <div class="alert alert-danger my-3">{{ message }}</div>
+    {% endfor %}
+    <form method="POST" class="row">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="user" class="form-label">Usuário: </label> <input type="text" name="username" id="user"{% if username  %}value="{{ username }}"{% endif %} class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="pass" class="form-label">Senha: </label> <input type="password" name="password" id="pass" class="form-control">
+      </div>
+      <div class="d-grid">
+        <button type="submit" class="btn btn-lg btn-primary">Entrar</button>
+      </div>
+    </form>
+{% endblock %}

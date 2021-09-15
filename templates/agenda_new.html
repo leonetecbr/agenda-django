@@ -6,19 +6,25 @@
     {% for message in messages %}
       <b>{{ message }}</b>
     {% endfor %}
-    <form method="POST" class="row">
+    <form method="POST" class="row needs-validation" autocomplete="off" novalidate>
       {% csrf_token %}
       <div class="mb-3">
-        <label for="title_evento" class="form-label">Título: </label> <input type="text" id="title_evento" class="form-control" {% if titulo %}value="{{ titulo }}"{% endif %} name="title">
+        <label for="title_evento" class="form-label">Título: </label>
+        <input type="text" id="title_evento" class="form-control" {% if titulo %}value="{{ titulo }}"{% endif %} name="title" maxlength="100" required>
+        <div class="invalid-feedback text-center">O título é obrigatório e deve ter no máximo 100 caracteres.</div>
       </div>
       <div class="mb-3">
-        <label for="date" class="form-label">Data do evento:</label> <input type="datetime-local" id="date" class="form-control" {% if date %}value="{{ date }}"{% endif %} name="data">
+        <label for="date" class="form-label">Data do evento:</label>
+        <input type="datetime-local" id="date" class="form-control" {% if date %}value="{{ date }}"{% endif %} name="data" required>
+        <div class="invalid-feedback text-center">A data do evento precisa ser informada!</div>
       </div>
       <div class="mb-3">
-        <label for="descricao" class="form-label">Descrição:</label><textarea name="desc" id="descricao" rows="5" class="form-control">{% if desc  %}{{ desc }}{% endif %}</textarea>
+        <label for="descricao" class="form-label">Descrição: <span class="fw-light">(opcional)</span></label>
+        <textarea name="desc" id="descricao" rows="5" class="form-control">{% if desc  %}{{ desc }}{% endif %}</textarea>
       </div>
       <div class="mb-3">
-        <label for="local" class="form-label">Local:</label> <input type="text" id="local" class="form-control" {% if local %}value="{{ local }}"{% endif %} name="local">
+        <label for="local" class="form-label">Local: <span class="fw-light">(opcional)</span></label>
+        <input type="text" id="local" class="form-control" {% if local %}value="{{ local }}"{% endif %} name="local">
       </div>
       <div class="d-grid">
         <button type="submit" class="btn btn-success btn-lg mb-3">Salvar</button>

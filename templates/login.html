@@ -5,7 +5,9 @@
     <hr>
     {% for message in messages %}
       {% if message.tags == 'error' %}
-        <div class="alert alert-danger my-3">{{ message }}</div>
+        {% if forloop.last %}
+          <div class="alert alert-danger my-3">{{ message }}</div>
+        {% endif %}
       {% endif %}
     {% endfor %}
     <form method="POST" class="row needs-validation" autocomplete="off" novalidate>

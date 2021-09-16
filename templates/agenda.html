@@ -8,7 +8,9 @@
     </div>
     {% for message in messages %}
       {% if message.tags == 'error' %}
+        {% if forloop.last %}
         <div class="alert alert-danger my-3">{{ message }}</div>
+        {% endif %}
       {% endif %}
     {% endfor %}
     <div class="list-group">
@@ -22,6 +24,9 @@
           <small class="text-muted">{{ evento.get_data }}</small>
         </div>
         <p class="mb-1">{% if evento.descricao %}{{ evento.descricao }}{% else %}(Sem descrição){% endif %}</p>
+        {% if evento.isNext %}
+            <div class="text-success float-end border border-2 p-1 border-success small">Evento próximo</div>
+          {% endif %}
         <small class="text-muted">{% if evento.local %}{{ evento.local }}{% else %}(Sem local definido){% endif %}</small>
       </a>
     {% endfor %}

@@ -30,4 +30,5 @@ urlpatterns = [
     path('agenda/', views.lista_eventos),
     path('agenda/json/', views.json_eventos),
     path('agenda/new/', views.novo_evento),
+    path('signup/', views.signup),
 ]

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime
 
 class Evento(models.Model):
   titulo = models.CharField(max_length=100)
@@ -23,6 +24,10 @@ class Evento(models.Model):
     
   def get_data_number(self):
     return self.data_evento.strftime('%Y%m%d%H%M')
+    
+  def isNext(self):
+    time = (self.data_evento-datetime.now()).total_seconds()
+    return True if (time >= -60 and time <= 3600) else False
 
   def __str__(self):
     return self.titulo

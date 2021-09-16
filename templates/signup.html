@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Cadastro{% endblock %}
+{% block content %}
+  <h2>Cadastro</h2>
+  <hr>
+  {% for message in messages %}
+    {% if message.tags == 'error' %}
+      {% if forloop.last %}
+        <div class="alert alert-danger my-3">{{ message }}</div>
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+  <form method="POST" class="row needs-validation" autocomplete="off" novalidate>
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="id_username" class="form-label">Usuário</label>
+        <input type="text" name="username" id="id_username" class="form-control" required placeholder="Escolha um nome de usuário ..." maxlength="150">
+        <div class="invalid-feedback text-center">Obrigatório. 150 caracteres ou menos. Letras, números e @/./+/-/_ apenas.</div>
+      </div>
+      <div class="mb-3">
+        <label for="id_password1" class="form-label">Senha</label>
+        <input type="password" name="password1" id="id_password1" class="form-control" required placeholder="Escolha uma senha ..." minlength="8">
+        <div class="invalid-feedback text-center"><ul><li class="mb-2">Sua senha não pode ser muito parecida com o resto das suas informações pessoais.</li><li class="mb-2">Sua senha precisa conter pelo menos 8 caracteres.</li><li class="mb-2">Sua senha não pode ser uma senha comumente utilizada.</li><li class="mb-2">Sua senha não pode ser inteiramente numérica.</li></ul></div>
+      </div>
+      <div class="mb-3">
+        <label for="id_password2" class="form-label">Confirmação de senha</label>
+        <input type="password" name="password2" id="id_password2" class="form-control" required placeholder="Reescreva sua senha ...">
+        <div class="invalid-feedback text-center">Informe a mesma senha informada anteriormente, para verificação.</div>
+      </div>
+    <div class="d-grid">
+      <button type="submit" class="btn btn-lg btn-primary">Cadastrar</button>
+    </div>
+  </form>
+{% endblock %}

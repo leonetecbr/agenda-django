@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.http import HttpResponse
 from core.models import Evento
@@ -22,14 +23,14 @@ def get_evento(request, id):
 def lista_eventos(request):
   data_atual = datetime.now().strftime('%Y%m%d%H%M')
   usuario = request.user
-  eventos = Evento.objects.filter(usuario=usuario)
+  eventos = Evento.objects.filter(usuario=usuario).order_by('-data_evento')
   data = {'eventos':eventos, 'data_atual':data_atual}
   return render(request, 'agenda.html', data)
 
 @login_required(login_url='/login/')
 def json_eventos(request):
   usuario = request.user
-  eventos = list(Evento.objects.filter(usuario=usuario).values('id', 'titulo', 'descricao', 'local', 'data_evento', 'data_criacao'))
+  eventos = list(Evento.objects.filter(usuario=usuario).values('id', 'titulo', 'descricao', 'local', 'data_evento', 'data_criacao').order_by('-data_evento'))
   if len(eventos) > 0:
     data = {'code':200, 'eventos':eventos}
   else:
@@ -124,3 +125,19 @@ def edita_evento(request, id):
     else:
       messages.error(request, 'Você não tem permissão para editar o evento solicitado!')
   return redirect('/agenda/')
+  
+def signup(request):
+  if request.method == 'POST':
+    form = UserCreationForm(request.POST)
+    if form.is_valid():
+      form.save()
+      username = form.cleaned_data.get('username')
+      raw_password = form.cleaned_data.get('password1')
+      user = authenticate(username=username, password=raw_password)
+      login(request, user)
+      return redirect('/agenda/')
+    else:
+      for f in form:
+        for error in f.errors:
+          messages.error(request, error)
+  return render(request, 'signup.html')

@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from datetime import timedelta
 
 class Evento(models.Model):
   titulo = models.CharField(max_length=100)
@@ -14,10 +13,16 @@ class Evento(models.Model):
     db_table = 'evento'
     
   def get_data(self):
-    return (self.data_evento-timedelta(hours=3)).strftime("%d/%m/%Y %H:%M")
+    return self.data_evento.strftime('%d/%m/%Y %H:%M')
     
   def get_criacao(self):
-    return (self.data_criacao-timedelta(hours=3)).strftime("%d/%m/%Y %H:%M:%S")
+    return self.data_criacao.strftime('%d/%m/%Y %H:%M:%S')
+  
+  def get_data_iso(self):
+    return self.data_criacao.strftime('%Y-%m-%dT%H:%M')
+    
+  def get_data_number(self):
+    return self.data_evento.strftime('%Y%m%d%H%M')
 
   def __str__(self):
     return self.titulo

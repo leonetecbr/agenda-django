@@ -6,10 +6,24 @@
     <div class="d-grid my-3">
       <button class="btn btn-lg btn-outline-success" onclick="redirect('/agenda/new')">Novo evento</button>
     </div>
-    <hr>
-    <ul>
-    {% for evento in eventos %}
-      <li class="mb-2">{{ evento.titulo }} - {{ evento.get_data }}</li>
+    {% for message in messages %}
+      {% if message.tags == 'error' %}
+        <div class="alert alert-danger my-3">{{ message }}</div>
+      {% endif %}
     {% endfor %}
-    </ul>
+    <div class="list-group">
+    {% if not eventos %}
+    <p class="text-muted my-2 text-center">Sem eventos agendados ...</p>
+    {% endif %}
+    {% for evento in eventos %}
+      <a href="/agenda/{{ evento.id }}" class="{% if data_atual > evento.get_data_number %}deactived {% endif %}list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{ evento.titulo }}</h5>
+          <small class="text-muted">{{ evento.get_data }}</small>
+        </div>
+        <p class="mb-1">{% if evento.descricao %}{{ evento.descricao }}{% else %}(Sem descrição){% endif %}</p>
+        <small class="text-muted">{% if evento.local %}{{ evento.local }}{% else %}(Sem local definido){% endif %}</small>
+      </a>
+    {% endfor %}
+    </div>
 {% endblock %}

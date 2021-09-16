@@ -4,7 +4,9 @@
     <h2>Login</h2>
     <hr>
     {% for message in messages %}
-      <div class="alert alert-danger my-3">{{ message }}</div>
+      {% if message.tags == 'error' %}
+        <div class="alert alert-danger my-3">{{ message }}</div>
+      {% endif %}
     {% endfor %}
     <form method="POST" class="row needs-validation" autocomplete="off" novalidate>
       {% csrf_token %}

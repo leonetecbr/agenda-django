@@ -1,4 +1,7 @@
-*{box-sizing: bordex-box;}
 main{font-size:14pt;padding: 5px;}
 ul.d-flex > li{margin-right: 10px;}
-header > nav{padding: 10px;}
+header{padding: 10px;}
+div.list-group > a.list-group-item{margin-bottom: 30px;border-top: none !important;}
+div.list-group > a.list-group-item:last-child{margin-bottom: 0 !important;}
+
+div.list-group > a.deactived{text-decoration: line-through !important; background-color: #d3d3d3;}

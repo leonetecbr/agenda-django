@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Evento{% endblock %}
+{% block content %}
+    <h2>Evento{% if data_atual > evento.get_data_number %}<div class="text-danger float-end border border-3 p-1 border-danger fs-6">Expirado</div>{% endif %}</h2>
+    <hr>
+    <ul><li>Título: {{ evento.titulo }}</li><li>Descrição: {{ evento.descricao }}</li><li>Data do evento: {{ evento.get_data }}</li><li>Local: {{ evento.local }}</li><li>Criado em: {{ evento.get_criacao }}</li><li>Criado por: {{ evento.usuario }}</li></ul>
+    <div class="d-grid">
+      <button class="btn btn-warning mb-3" onclick="redirect('/agenda/edit/{{ evento.id }}/')">Editar evento</button>
+      <button class="btn btn-danger" onclick="redirect('/agenda/delete/{{ evento.id }}/')">Excluir evento</button>
+      </div>
+{% endblock %}

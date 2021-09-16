@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Editar evento{% endblock %}
+{% block content %}
+    <h2>Editar evento</h2>
+    <hr>
+    {% for message in messages %}
+      {% if message.tags == 'error' %}
+        <div class="alert alert-danger my-3">{{ message }}</div>
+      {% endif %}
+    {% endfor %}
+    <form method="POST" class="row needs-validation" autocomplete="off" novalidate>
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="title_evento" class="form-label">Título: </label>
+        <input type="text" id="title_evento" class="form-control" value="{% if titulo %}{{ titulo }}{% else %}{{ evento.titulo }}{% endif %}" name="title" maxlength="100" required>
+        <div class="invalid-feedback text-center">O título é obrigatório e deve ter no máximo 100 caracteres.</div>
+      </div>
+      <div class="mb-3">
+        <label for="date" class="form-label">Data do evento:</label>
+        <input type="datetime-local" id="date" class="form-control" value="{% if date %}{{ date }}{% else %}{{ evento.get_data_iso }}{% endif %}" name="data" required>
+        <div class="invalid-feedback text-center">A data do evento precisa ser informada!</div>
+      </div>
+      <div class="mb-3">
+        <label for="descricao" class="form-label">Descrição: <span class="fw-light">(opcional)</span></label>
+        <textarea name="desc" id="descricao" rows="5" class="form-control">{% if desc  %}{{ desc }}{% elif evento.descricao %}{{ evento.descricao }}{% endif %}</textarea>
+      </div>
+      <div class="mb-3">
+        <label for="local" class="form-label">Local: <span class="fw-light">(opcional)</span></label>
+        <input type="text" id="local" class="form-control" {% if local %}value="{{ local }}"{% elif evento.local %}value="{{ evento.local }}"{% endif %} name="local">
+      </div>
+      <div class="d-grid">
+        <button type="submit" class="btn btn-success btn-lg mb-3">Salvar</button>
+        <button type="button" class="btn btn-danger btn-lg" onclick="redirect('/agenda/{{ evento.id }}/')">Cancelar</button>
+      </div>
+    </form>
+{% endblock %}
